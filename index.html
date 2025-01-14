@@ -18,6 +18,25 @@
     <script src="script.js"></script>
     <!-- 外部样式 style.css -->
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <!-- MathJax, 支持LaTeX -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            inlineMath: [['$','$'], ['\\(','\\)']],
+            processEscapes: true
+          },
+          TeX: {
+            equationNumbers: {
+              autoNumber: "AMS"
+            }
+          }
+        });
+    </script>
+      
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_CHTML">
+    </script>
 </head>
 <body>
     <!-- 页眉 -->
@@ -46,15 +65,39 @@
     </div>
 
     <!-- 正文 -->
-    <h3>About Me</h3>
+    <h2>About Me</h2>
     <p>
-        I am now a postdoctoral at <a href="https://its.westlake.edu.cn/English/Home/Home.htm">Institute for Theoretical Sciences, Westlake University</a>. I received my PhD degree from <a href="https://www.imj-prg.fr" target="_blank">IMJ-PRG, Sorbonne Université</a> under the supervision of <a href="https://webusers.imj-prg.fr/~bruno.kahn/" target="_blank">Bruno Kahn</a>.
+        I am currently a postdoc at <a href="https://its.westlake.edu.cn/English/Home/Home.htm" target="_blank">Institute for Theoretical Sciences</a> of Westlake University in the research group of <a href="https://its.westlake.edu.cn/info/1108/1995.htm" target="_blank">Huayi Chen</a>. 
+        <br><br>
+        Previously, I obtained my PhD degree from <a href="https://www.imj-prg.fr" target="_blank">IMJ-PRG</a> of Sorbonne Université.
     </p>
 
-    <h3>Research Interests</h3>
-    <p>Algebraic geometry and number theory. In particular, abelian varieties, motives, cohomology of schemes, homological and homotopical algebra.</p>
+    <h2>Research Interests</h2>
+    <p>Number theory and arithmetic geometry. In particular, abelian varieties, motives, cohomology of schemes, homological and homotopical algebra, zeta and $L$-functions.</p>
 
-    <h3>Contact</h3>
+    <h2>Education</h2>
+    <ul style="margin-left: 5%;">
+        <li>
+            2021.10-2024.10, PhD in mathematics, <i><a href="https://www.imj-prg.fr" target="_blank">IMJ-PRG, Sorbonne Université</a>,</i> Paris, France.
+            <br>
+            Supervisor: <a href="https://webusers.imj-prg.fr/~bruno.kahn/" target="_blank">Bruno Kahn</a>
+        </li>
+        <li>
+            2020.09-2021.09, Master in Arithmétique, Analyse, Géométrie, <i><a href="https://www.imo.universite-paris-saclay.fr/en/" target="_blank">Université Paris-Saclay</a>,</i> Orsay, France.
+            <br>
+            Supervisor: <a href="https://webusers.imj-prg.fr/~bruno.kahn/" target="_blank">Bruno Kahn</a>
+        </li>
+        <li>
+            2017.09-2020.06, Master in mathematics, <i><a href="https://amss.cas.cn/" target="_blank">AMSS, Chinese Academy of Sciences</a>,</i> Beijing, China.
+            <br>
+            Supervisor: <a href="http://www.mcm.ac.cn/people/members/202012/t20201204_599731.html" target="_blank">Ye Tian</a>
+        </li>
+        <li>
+            2013.09-2017.06, Bachelor in mathematics, <i><a href="https://math.nju.edu.cn/" target="_blank">Nanjing University</a>,</i> Nanjing, China.
+        </li>
+    </ul>
+
+    <h2>Contact</h2>
 
     <div class="column">
         <div class="column left">
@@ -69,11 +112,9 @@
 
         <div class="column right">
             Westlake University <br>
-            No. 600 Dunyu Road <br>
-            Xihu district, Hangzhou <br>
-            Zhejiang Province<br>
-            China <br>
-            310030 <br>
+            No. 600 Dunyu Road, Sandun Town<br>
+            Xihu District, 310030<br>
+            Hangzhou, Zhejiang, P. R. China<br>
         </div>
     </div>
 </body>

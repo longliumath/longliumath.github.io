@@ -18,6 +18,25 @@
     <script src="script.js"></script>
     <!-- 外部样式 style.css -->
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <!-- MathJax, 支持LaTeX -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            inlineMath: [['$','$'], ['\\(','\\)']],
+            processEscapes: true
+          },
+          TeX: {
+            equationNumbers: {
+              autoNumber: "AMS"
+            }
+          }
+        });
+    </script>
+      
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_CHTML">
+    </script>
 </head>
 <body>
     <!-- 页眉 -->

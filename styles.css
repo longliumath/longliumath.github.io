@@ -1,0 +1,223 @@
+/*********************************************** 全局 **********************************************/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin-left: 20%;  /* 左边距 */
+    margin-right: 20%; /* 右边距 */
+    margin-bottom: 300px; /* 底边距 */
+    padding-top: 70px; /* 上内边距，避免内容覆盖 */
+    font-family: Arial, sans-serif;  /* 字体 */
+    font-size: 1em;   /* 字体大小 */
+    font-weight: 400; /* 字体粗细 */
+    line-height: 1.5; /* 1.5倍行间距 */
+}
+
+a {
+    color: #1E3A8A; /* 链接颜色 */
+}
+
+li {
+    margin-bottom: 10px;        /* 设置列表项目之间的垂直间距 */
+    margin-top: 10px;
+}
+
+p {
+    text-align: justify;
+}
+
+/*********************************************** 各级标题 *********************************************/
+/* 网页标题区域 */
+.page-title {
+    margin-top: 80px;   /* 上边距 */
+    height: 120px;      /* 调整区域高度 */
+    text-align: center; /* 文本水平居中 */
+}
+
+/* 网页标题样式 */
+h1 {
+    font-size: 3em;   /* 字体大小 */
+    font-weight: 400; /* 字体粗细 */
+}
+
+/* 网页副标题样式 */
+h2 {
+    margin-bottom: 5px;  /* 下边距 */
+    font-size: 2em;   /* 字体大小 */
+    font-weight: 400; /* 字体粗细 */
+}
+
+/* 正文章节标题 */
+h3 {
+    font-size: 2em;   /* 字体大小 */
+    font-weight: 400; /* 字体粗细 */
+    margin-top: 50px; /* 上边距 */
+    margin-bottom: 20px; /* 下边距 */
+}
+
+/*********************************************** 正文，分栏 *********************************************/
+.column {
+    float: left;            /* 向左浮动 */
+    width: 100%;            /* 宽度 */
+    margin-bottom: 30px;    /* 下边距 */
+}
+
+.column.left {
+    width: 50%;             /* 左侧分栏宽度 */
+}
+
+/* 中间隔断栏，内容不显示 */
+.column.middle {            
+    width: 10%;
+    visibility: hidden; 
+}
+
+.column.right {
+    width: 40%;             /* 左侧分栏宽度 */
+}
+
+/******************************************** 汉堡按钮 **********************************************/
+/* 汉堡按钮外观 */
+.hamburger-button {
+    display: none;     /* 大屏幕上隐藏 */
+    cursor: pointer;   /* 鼠标悬停，手型光标 */
+    background: none;
+    border: none;
+    outline: none;
+}
+
+.line {
+    width: 20px;
+    height: 2px;
+    background-color: #ffffff;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+}
+
+/********************************************** 页眉 ***********************************************/
+/* 页眉参数 */
+.header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: 5px 15px;
+    background-color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 300;
+}
+
+/* 页眉链接 */
+.header a {
+    display: block;          /* 每个链接作为块元素 */
+    padding: 10px 15px;      /* 内边距 */
+    text-decoration: none;   /* 移除下划线 */
+    color: #ffffff;        /* 颜色 */
+}
+
+.header a:hover {
+    color: #989898;        /* 鼠标悬停时改变链接颜色 */
+}
+
+.nav {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.header ul {
+    list-style: none;      /* 移除列表前小标志 */
+    display: flex;
+}
+
+/*********************************** 响应式布局 - 宽度小于768px(手机屏幕)时 **********************************/
+@media screen and (max-width: 767.98px) {
+    /* 手机屏幕上取消分栏，改为上下显示 */
+    .column.left, .column.right {
+        width: 80%;
+    }
+
+    /* 调整边距和字体大小 */
+    body {
+        margin-left: 5%;
+        margin-right: 5%;
+        font-size: 0.9em;
+    }
+
+    /* 调整页眉边距 */
+    .header {
+        font-size: 1.1em;
+    }
+
+    h1 {
+        font-size: 2.0em;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    h3 {
+        font-size: 1.5em;
+    }
+
+    /* 显示隐藏的汉堡按钮 */
+    .hamburger-button {
+        display: block;
+    }
+
+    /* 导航竖排在页眉下方. 默认不显示导航，点击汉堡按钮时展示导航*/
+    .nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        background-color: #000000;
+    }
+
+    .header ul {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .header ul li {
+        width: 100%;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+/*********************** 手机屏幕上点击汉堡按钮，背景颜色变灰，显示导航 ****************************/
+/* 全局背景颜色变灰 */
+.effect-bg {
+    background-color: rgb(77, 77, 77);
+    a {
+        color: #0f1a3a; /* 链接颜色 */
+    }
+    .header a {
+        color: #ffffff;
+    }
+}
+
+/* 显示导航 */
+.effect-nav {
+    display: block;
+}
+
+/*********************************** 响应式布局 - 平板电脑 **********************************/
+@media (min-width: 768px) and (max-width: 1024px) { 
+    /* 调整边距 */
+    body {
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+}

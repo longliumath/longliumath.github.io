@@ -6,8 +6,8 @@
 }
 
 body {
-    margin-left: 27%;  /* 左边距 */
-    margin-right: 27%; /* 右边距 */
+    margin-left: 20%;  /* 左边距 */
+    margin-right: 20%; /* 右边距 */
     margin-bottom: 300px; /* 底边距 */
     padding-top: 70px; /* 上内边距，避免内容覆盖 */
     font-family: Arial, sans-serif;  /* 字体 */
@@ -189,13 +189,4 @@ h2 {
 /* 显示导航 */
 .effect-nav {
     display: block;
-}
-
-/*********************************** 响应式布局 - 平板电脑 **********************************/
-@media (min-width: 768px) and (max-width: 1024px) { 
-    /* 调整边距 */
-    body {
-        margin-left: 10%;
-        margin-right: 10%;
-    }
 }

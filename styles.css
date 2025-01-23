@@ -6,8 +6,8 @@
 }
 
 body {
-    margin-left: 20%;  /* 左边距 */
-    margin-right: 20%; /* 右边距 */
+    margin-left: 25%;  /* 左边距 */
+    margin-right: 25%; /* 右边距 */
     margin-bottom: 300px; /* 底边距 */
     padding-top: 70px; /* 上内边距，避免内容覆盖 */
     font-family: Arial, sans-serif;  /* 字体 */

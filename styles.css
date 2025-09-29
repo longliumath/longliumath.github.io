@@ -10,7 +10,7 @@ body {
     margin-right: 25%; /* 右边距 */
     margin-bottom: 300px; /* 底边距 */
     padding-top: 70px; /* 上内边距，避免内容覆盖 */
-    font-family: "Times New Roman";  /* 字体 */
+    font-family: 微软雅黑;  /* 字体 */
     font-size: 1em;   /* 字体大小 */
     font-weight: 100; /* 字体粗细 */
     line-height: 1.5; /* 1.5倍行间距 */

@@ -11,7 +11,7 @@ body {
     margin-bottom: 300px; /* 底边距 */
     padding-top: 70px; /* 上内边距，避免内容覆盖 */
     font-family: 微软雅黑;  /* 字体 */
-    font-size: 29px;   /* 字体大小 */
+    font-size: 12em;   /* 字体大小 */
     font-weight: 300; /* 字体粗细 */
     line-height: 1.5; /* 1.5倍行间距 */
     background-color: #212121;

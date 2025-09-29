@@ -6,12 +6,12 @@
 }
 
 body {
-    margin-left: 25%;  /* 左边距 */
-    margin-right: 25%; /* 右边距 */
+    margin-left: 20%;  /* 左边距 */
+    margin-right: 20%; /* 右边距 */
     margin-bottom: 300px; /* 底边距 */
     padding-top: 70px; /* 上内边距，避免内容覆盖 */
     font-family: 微软雅黑;  /* 字体 */
-    font-size: 1em;   /* 字体大小 */
+    font-size: 29px;   /* 字体大小 */
     font-weight: 300; /* 字体粗细 */
     line-height: 1.5; /* 1.5倍行间距 */
     background-color: #212121;

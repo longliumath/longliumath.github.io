@@ -49,7 +49,7 @@ h1 {
 /* 正文章节标题 */
 h2 {
     font-size: 2em;   /* 字体大小 */
-    font-weight: 300; /* 字体粗细 */
+    font-weight: 400; /* 字体粗细 */
     margin-top: 50px; /* 上边距 */
     margin-bottom: 20px; /* 下边距 */
     color: #ffffff;

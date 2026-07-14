@@ -1,102 +1,1188 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NFYHBFTXEQ"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Long Liu | Math</title>
+  <style>
+    /* ===== 1. CSS变量 ===== */
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --primary-light: #38bdf8;
+      --bg-light: #f1f5f9;
+      --text-dark: #0f172a;
+      --text-muted: #475569;
+      --text-light: #64748b;
+      --border-light: #e2e8f0;
+      --bg-card: #f8fafc;
+      --shadow: 0 10px 25px rgba(15, 23, 42, 0.04);
+      --shadow-hover: 0 6px 16px rgba(15, 23, 42, 0.08);
+    }
 
-        gtag('config', 'G-NFYHBFTXEQ');
-    </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Long Liu</title>
-    <link rel="icon" href="loong.ico" type="image/x-icon">
-    <!-- 外部脚本 script.js -->
-    <script src="script.js"></script>
-    <!-- 外部样式 style.css -->
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <!-- MathJax, 支持LaTeX -->
-    <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({
-          tex2jax: {
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            inlineMath: [['$','$'], ['\\(','\\)']],
-            processEscapes: true
-          },
-          TeX: {
-            equationNumbers: {
-              autoNumber: "AMS"
+    /* ===== 2. 基础复位与响应式变量 ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-light);
+      color: var(--text-muted);
+      line-height: 1.7;
+      padding: 6rem 1rem 3rem;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 3.5rem 3rem;
+    }
+
+    .icon {
+      display: inline-block;
+      width: 1.1em;
+      height: 1.1em;
+      vertical-align: -0.15em;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* ===== 3. 导航栏 ===== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.98);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: background 0.3s ease;
+    }
+
+    .navbar .nav-brand {
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: #f8fafc;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 1001;
+      transition: color 0.2s ease;
+    }
+
+    .navbar .nav-brand:hover {
+      color: var(--primary-light);
+    }
+
+    .navbar .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .navbar .nav-links {
+      display: flex;
+      gap: 1.25rem;
+      list-style: none;
+    }
+
+    .navbar .nav-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 0.5rem 0;
+      transition: color 0.2s ease;
+      position: relative;
+    }
+
+    .navbar .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary-light);
+      transition: width 0.3s ease;
+    }
+
+    .navbar .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .navbar .nav-links a:hover {
+      color: var(--primary-light);
+    }
+
+    /* ===== 4. 语言切换核心逻辑 ===== */
+    .lang-zh {
+      display: none;
+    }
+    .lang-en {
+      display: inline-block;
+    }
+    body.zh-mode .lang-en {
+      display: none;
+    }
+    body.zh-mode .lang-zh {
+      display: inline-block;
+    }
+    body.zh-mode p.lang-zh,
+    body.zh-mode div.lang-zh,
+    body.zh-mode .lang-zh-block {
+      display: block;
+    }
+
+    /* ===== 5. 汉堡菜单 ===== */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 1001;
+      transition: transform 0.2s ease;
+    }
+
+    .hamburger:hover {
+      transform: scale(1.05);
+    }
+
+    .hamburger span {
+      display: block;
+      width: 26px;
+      height: 2.5px;
+      background: #f8fafc;
+      border-radius: 2px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-origin: center;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(7.5px) rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-7.5px) rotate(-45deg);
+    }
+
+    /* ===== 6. 语言切换按钮 ===== */
+    .lang-toggle {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #f8fafc;
+      padding: 0.35rem 1rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      letter-spacing: 0.5px;
+    }
+
+    .lang-toggle:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: scale(1.02);
+    }
+
+    .lang-toggle:active {
+      transform: scale(0.98);
+    }
+
+    /* ===== 7. 个人简介 ===== */
+    .profile {
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+      margin-bottom: 3.5rem;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 3rem;
+      scroll-margin-top: 6.5rem;
+    }
+
+    .avatar {
+      flex-shrink: 0;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+      border: 4px solid #ffffff;
+      outline: 1px solid var(--border-light);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      overflow: hidden;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar:hover {
+      transform: scale(1.05);
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .avatar .fallback-avatar {
+      display: none;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: #f8fafc;
+      font-size: 3.5rem;
+      font-weight: 700;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .profile-text h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.25rem;
+      line-height: 1.2;
+    }
+
+    .profile-text .title {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .profile-text .affiliation {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      align-items: center;
+    }
+
+    .profile-text .affiliation i {
+      font-style: normal;
+      background: var(--bg-light);
+      padding: 0.15rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      color: var(--text-light);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.5rem;
+    }
+
+    .contact-links a,
+    .contact-links .address {
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      padding: 0.2rem 0.3rem;
+    }
+
+    .contact-links a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    /* ===== 8. 通用章节 ===== */
+    section {
+      margin-bottom: 3.5rem;
+      scroll-margin-top: 6.5rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      border-left: 4px solid var(--primary);
+      padding-left: 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .research-text {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      text-align: justify;
+    }
+
+    .research-text p {
+      margin-bottom: 0.5rem;
+    }
+
+    /* ===== 9. CV列表 ===== */
+    .cv-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cv-item {
+      display: flex;
+      padding: 1rem 0.75rem;
+      border-bottom: 1px solid var(--bg-light);
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      margin: 0 -0.75rem;
+    }
+
+    .cv-item:hover {
+      background: #fafcfd;
+      box-shadow: var(--shadow-hover);
+    }
+
+    .cv-year {
+      font-weight: 600;
+      color: var(--primary-dark);
+      width: 160px;
+      flex-shrink: 0;
+    }
+
+    .cv-content {
+      flex: 1;
+    }
+
+    .cv-line1 {
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .cv-line2 {
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
+    .cv-line3 {
+      font-size: 0.92rem;
+      color: var(--text-light);
+      margin-top: 0.2rem;
+    }
+
+    .cv-line3 a {
+      color: var(--primary);
+      text-decoration: none;
+      border-bottom: 1px dotted #94a3b8;
+      transition: border-color 0.2s ease;
+    }
+
+    .cv-line3 a:hover {
+      border-color: var(--primary);
+    }
+
+    .ta-text {
+      font-weight: 400;
+      color: var(--text-light);
+      font-size: 0.9em;
+    }
+
+    .school-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 2px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sep {
+      color: #cbd5e1;
+      margin: 0 0.5rem;
+    }
+
+    /* ===== 10. 论文列表 ===== */
+    .paper-entry {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+    }
+
+    .paper-entry:hover {
+      border-color: #cbd5e1;
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+    }
+
+    .paper-title {
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--text-dark);
+      margin-bottom: 0.3rem;
+    }
+
+    .paper-authors {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .paper-venue {
+      font-size: 0.92rem;
+      color: var(--text-light);
+      font-style: italic;
+      margin-bottom: 0.75rem;
+    }
+
+    .paper-links {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .paper-links a {
+      text-decoration: none;
+      font-size: 0.8rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .paper-links a.link-arxiv {
+      color: #b91c1c;
+      background: #fee2e2;
+    }
+    .paper-links a.link-arxiv:hover {
+      color: #ffffff;
+      background: #b91c1c;
+      transform: translateY(-1px);
+    }
+
+    .paper-links a.link-pdf {
+      color: #15803d;
+      background: #dcfce7;
+    }
+    .paper-links a.link-pdf:hover {
+      color: #ffffff;
+      background: #15803d;
+      transform: translateY(-1px);
+    }
+
+    .paper-links a.link-doi {
+      color: #1e40af;
+      background: #dbeafe;
+    }
+    .paper-links a.link-doi:hover {
+      color: #ffffff;
+      background: #1e40af;
+      transform: translateY(-1px);
+    }
+
+    /* ===== 11. 页脚 ===== */
+    .footer-note {
+      margin-top: 4rem;
+      border-top: 1px solid var(--border-light);
+      padding-top: 2rem;
+      text-align: center;
+      font-size: 0.88rem;
+      color: var(--text-light);
+    }
+
+    .footer-note div {
+      margin-bottom: 0.25rem;
+    }
+
+    /* ===== 12. 响应式设计 ===== */
+    @media (max-width: 768px) {
+      body {
+        padding-top: 5rem;
+      }
+
+      .container {
+        padding: 2.5rem 1.5rem;
+        border-radius: 12px;
+      }
+
+      .profile {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+      }
+
+      .avatar {
+        width: 120px;
+        height: 120px;
+      }
+
+      .profile-text h1 {
+        font-size: 2.1rem;
+      }
+
+      .profile-text .affiliation,
+      .contact-links {
+        justify-content: center;
+      }
+
+      .cv-item {
+        flex-direction: column;
+        gap: 0.25rem;
+        padding: 1rem 0.5rem;
+        margin: 0 -0.5rem;
+      }
+
+      .cv-year {
+        width: auto;
+        font-size: 0.95rem;
+      }
+
+      /* 汉堡菜单 */
+      .hamburger {
+        display: flex;
+      }
+
+      .navbar .nav-links {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(15, 23, 42, 0.98);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        transform: translateX(100%);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 2rem;
+        margin: 0;
+        list-style: none;
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .navbar .nav-links.open {
+        transform: translateX(0);
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .navbar .nav-links a {
+        font-size: 1.4rem;
+        color: #e2e8f0;
+        padding: 0.75rem 1.5rem;
+        transition: all 0.2s ease;
+      }
+
+      .navbar .nav-links a::after {
+        display: none;
+      }
+
+      .navbar .nav-links a:hover {
+        color: var(--primary-light);
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+      }
+
+      .navbar .nav-menu {
+        gap: 0.75rem;
+      }
+
+      .paper-entry {
+        padding: 1.25rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .navbar {
+        padding: 0.6rem 1rem;
+      }
+
+      .container {
+        padding: 2rem 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding-top: 5.5rem;
+      }
+
+      .navbar .nav-brand {
+        font-size: 1.05rem;
+      }
+
+      .navbar .nav-links a {
+        font-size: 1.2rem;
+      }
+
+      .container {
+        padding: 1.5rem 1rem;
+      }
+
+      .profile-text h1 {
+        font-size: 1.8rem;
+      }
+
+      .avatar {
+        width: 100px;
+        height: 100px;
+      }
+
+      .paper-entry {
+        padding: 1rem;
+      }
+
+      .paper-links a {
+        font-size: 0.75rem;
+        padding: 0.2rem 0.6rem;
+      }
+    }
+
+    /* ===== 13. 打印样式 ===== */
+    @media print {
+      .navbar {
+        position: static;
+        background: #f8fafc;
+        box-shadow: none;
+        backdrop-filter: none;
+        padding: 0.5rem 0;
+      }
+
+      .navbar .nav-brand {
+        color: var(--text-dark);
+      }
+
+      .navbar .nav-links {
+        display: none !important;
+      }
+
+      .lang-toggle {
+        display: none !important;
+      }
+
+      .hamburger {
+        display: none !important;
+      }
+
+      body {
+        padding: 1rem;
+        background: #ffffff;
+      }
+
+      .container {
+        box-shadow: none;
+        padding: 1rem;
+      }
+
+      .paper-entry {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .cv-item {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== 导航栏 ===== -->
+  <nav class="navbar" role="navigation" aria-label="主导航">
+    <a href="#" class="nav-brand">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      <span class="lang-en">Long Liu</span>
+      <span class="lang-zh">刘龙</span>
+    </a>
+    <div class="nav-menu">
+      <button class="hamburger" id="hamburgerBtn" aria-label="切换导航菜单" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links" id="navLinks" role="menubar">
+        <li role="none"><a href="#profile" role="menuitem"><span class="lang-en">About</span><span class="lang-zh">关于</span></a></li>
+        <li role="none"><a href="#research" role="menuitem"><span class="lang-en">Research</span><span class="lang-zh">研究</span></a></li>
+        <li role="none"><a href="#publications" role="menuitem"><span class="lang-en">Publications</span><span class="lang-zh">论文</span></a></li>
+        <li role="none"><a href="#teaching" role="menuitem"><span class="lang-en">Teaching</span><span class="lang-zh">教学</span></a></li>
+        <li role="none"><a href="#cv" role="menuitem"><span class="lang-en">CV</span><span class="lang-zh">简历</span></a></li>
+      </ul>
+      <button class="lang-toggle" onclick="toggleLang()" id="langBtn" aria-label="切换至中文">中文</button>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- ===== 个人信息 ===== -->
+    <section class="profile" id="profile" aria-label="个人信息">
+      <div class="avatar" id="avatarContainer">
+        <img src="Liu.jpg" alt="Long Liu - 刘龙" id="avatarImg" loading="lazy" />
+        <div class="fallback-avatar">刘</div>
+      </div>
+      <div class="profile-text">
+        <h1>
+          <span class="lang-en">Long Liu</span>
+          <span class="lang-zh">刘龙</span>
+        </h1>
+        <div class="title">
+          <span class="lang-en">Postdoctoral Researcher</span>
+          <span class="lang-zh">博士后</span>
+        </div>
+        <div class="affiliation">
+          <span>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5.47 12.33L12 15.91l6.53-3.58V17H5.47v-4.67z"/></svg>
+            <span class="lang-en">Institute for Theoretical Sciences, Westlake University</span>
+            <span class="lang-zh">西湖大学 理论科学研究院</span>
+          </span>
+          <span>
+            <i>
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              <span class="lang-en">Hangzhou, China</span>
+              <span class="lang-zh">中国杭州</span>
+            </i>
+          </span>
+        </div>
+        <div class="contact-links">
+          <a href="mailto:liulong@westlake.edu.cn" aria-label="发送邮件">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg> liulong@westlake.edu.cn
+          </a>
+          <span class="address">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span class="lang-en">Office: E14-307B</span>
+            <span class="lang-zh">办公室: E14-307B</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 研究方向 ===== -->
+    <section id="research" aria-label="研究方向">
+      <h2>
+        <span class="lang-en">Research Interests</span>
+        <span class="lang-zh">研究方向</span>
+      </h2>
+      <div class="research-text lang-en">
+        <p>My research interests lie in <strong>number theory</strong> and <strong>arithmetic geometry</strong>. Specifically, I work on <strong>rational points</strong> on algebraic varieties, <strong>abelian varieties</strong>, <strong>motives</strong>, <strong>zeta and L-functions</strong>, and related <strong>cohomology theories</strong>.</p>
+      </div>
+      <div class="research-text lang-zh">
+        <p>我的研究领域是<strong>数论</strong>与<strong>算术几何</strong>，涉及代数簇上的<strong>有理点</strong>、<strong>阿贝尔簇</strong>、<strong>motives</strong>、<strong>zeta与L-函数</strong>以及相关的<strong>上同调理论</strong>。</p>
+      </div>
+    </section>
+
+    <!-- ===== 论文 ===== -->
+    <section id="publications" aria-label="论文列表">
+      <h2>
+        <span class="lang-en">Preprints and Publications</span>
+        <span class="lang-zh">论文</span>
+      </h2>
+
+      <div class="paper-entry">
+        <div class="paper-title">Chow trace of 1-motives and the Lang-Néron groups</div>
+        <div class="paper-venue">To appear in <i>Algebra &amp; Number Theory</i></div>
+        <div class="paper-links">
+          <a href="https://doi.org/10.48550/arXiv.2404.13200" class="link-doi" target="_blank" rel="noopener noreferrer">DOI</a>
+          <a href="https://arxiv.org/abs/2404.13200" class="link-arxiv" target="_blank" rel="noopener noreferrer">arXiv</a>
+          <a href="articles/M1LN.pdf" class="link-pdf" target="_blank" rel="noopener noreferrer">PDF</a>
+        </div>
+      </div>
+
+      <div class="paper-entry">
+        <div class="paper-title">A specialisation theorem for Lang-Néron groups</div>
+        <div class="paper-authors">with Bruno Kahn</div>
+        <div class="paper-venue">Preprint</div>
+        <div class="paper-links">
+          <a href="https://doi.org/10.48550/arXiv.2405.06114" class="link-doi" target="_blank" rel="noopener noreferrer">DOI</a>
+          <a href="https://arxiv.org/abs/2405.06114" class="link-arxiv" target="_blank" rel="noopener noreferrer">arXiv</a>
+          <a href="articles/spLN.pdf" class="link-pdf" target="_blank" rel="noopener noreferrer">PDF</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 教学 ===== -->
+    <section id="teaching" aria-label="教学经历">
+      <h2>
+        <span class="lang-en">Teaching</span>
+        <span class="lang-zh">教学经历</span>
+      </h2>
+
+      <div class="school-section">
+        <div class="school-title">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5.47 12.33L12 15.91l6.53-3.58V17H5.47v-4.67z"/></svg>
+          <span class="lang-en">Westlake University</span>
+          <span class="lang-zh">西湖大学</span>
+        </div>
+        <div class="cv-list">
+          <div class="cv-item">
+            <span class="cv-year"><span class="lang-en">Summer 2026</span><span class="lang-zh">2026 夏</span></span>
+            <div class="cv-content">
+              <div class="cv-line1">
+                <span class="lang-en">MATH1008 Linear Algebra</span>
+                <span class="lang-zh">MATH1008 线性代数</span>
+              </div>
+            </div>
+          </div>
+          <div class="cv-item">
+            <span class="cv-year"><span class="lang-en">Fall 2025</span><span class="lang-zh">2025 秋</span></span>
+            <div class="cv-content">
+              <div class="cv-line1">
+                <span class="lang-en">MATH4805 Category Theory <span class="ta-text">(Teaching Assistant)</span></span>
+                <span class="lang-zh">MATH4805 范畴论 <span class="ta-text">(助教)</span></span>
+              </div>
+              <div class="cv-line3">
+                <span class="lang-en">Suggested solutions to some exercises:</span>
+                <span class="lang-zh">部分习题解答：</span>
+                <a href="teaching/exercises_category.pdf">pdf</a>
+              </div>
+            </div>
+          </div>
+          <div class="cv-item">
+            <span class="cv-year"><span class="lang-en">Spring 2025</span><span class="lang-zh">2025 春</span></span>
+            <div class="cv-content">
+              <div class="cv-line1">
+                <span class="lang-en">MATH1005 Multi-variable Calculus Track A <span class="ta-text">(Teaching Assistant)</span></span>
+                <span class="lang-zh">MATH1005 多变量微积分 A班 <span class="ta-text">(助教)</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 简历 ===== -->
+    <section id="cv" aria-label="个人简历">
+      <h2>
+        <span class="lang-en">Curriculum Vitae</span>
+        <span class="lang-zh">个人简历</span>
+      </h2>
+      <div class="cv-list">
+        <div class="cv-item">
+          <span class="cv-year"><span class="lang-en">2025.01 – Present</span><span class="lang-zh">2025.01 – 至今</span></span>
+          <div class="cv-content">
+            <div class="cv-line1"><span class="lang-en">Postdoctoral Researcher</span><span class="lang-zh">博士后</span></div>
+            <div class="cv-line2">
+              <span class="lang-en">Institute for Theoretical Sciences, Westlake University, Hangzhou, China</span>
+              <span class="lang-zh">西湖大学理论科学研究院，杭州，中国</span>
+            </div>
+            <div class="cv-line3">
+              <span class="lang-en">Mentor:</span><span class="lang-zh">合作导师：</span>
+              <a href="https://its.westlake.edu.cn/info/1108/1995.htm" target="_blank" rel="noopener noreferrer">Huayi Chen</a>
+            </div>
+          </div>
+        </div>
+        <div class="cv-item">
+          <span class="cv-year">2021.10 – 2024.10</span>
+          <div class="cv-content">
+            <div class="cv-line1"><span class="lang-en">Ph.D. in Mathematics</span><span class="lang-zh">数学博士</span></div>
+            <div class="cv-line2">
+              <span class="lang-en">IMJ-PRG, Sorbonne Université, Paris, France</span>
+              <span class="lang-zh">索邦大学 IMJ-PRG 数学研究所，巴黎，法国</span>
+            </div>
+            <div class="cv-line3">
+              <span class="lang-en">Supervisor:</span><span class="lang-zh">导师：</span>
+              <a href="https://webusers.imj-prg.fr/~bruno.kahn/" target="_blank" rel="noopener noreferrer">Bruno Kahn</a>
+            </div>
+          </div>
+        </div>
+        <div class="cv-item">
+          <span class="cv-year">2020.09 – 2021.09</span>
+          <div class="cv-content">
+            <div class="cv-line1">
+              <span class="lang-en">M.Sc. (M2) in Arithmétique, Analyse, Géométrie</span>
+              <span class="lang-zh">硕士 (M2)，算术-分析-几何</span>
+            </div>
+            <div class="cv-line2">
+              <span class="lang-en">Université Paris-Saclay, Orsay, France</span>
+              <span class="lang-zh">巴黎-萨克雷大学，奥赛，法国</span>
+            </div>
+          </div>
+        </div>
+        <div class="cv-item">
+          <span class="cv-year">2017.09 – 2020.06</span>
+          <div class="cv-content">
+            <div class="cv-line1"><span class="lang-en">M.Sc. in Mathematics</span><span class="lang-zh">数学硕士</span></div>
+            <div class="cv-line2">
+              <span class="lang-en">Academy of Mathematics and Systems Science, Chinese Academy of Sciences, Beijing, China</span>
+              <span class="lang-zh">中国科学院数学与系统科学研究院，北京，中国</span>
+            </div>
+            <div class="cv-line3">
+              <span class="lang-en">Supervisor:</span><span class="lang-zh">导师：</span>
+              <a href="http://www.mcm.ac.cn/people/members/202012/t20201204_1093674.html" target="_blank" rel="noopener noreferrer">Ye Tian</a>
+            </div>
+          </div>
+        </div>
+        <div class="cv-item">
+          <span class="cv-year">2013.09 – 2017.06</span>
+          <div class="cv-content">
+            <div class="cv-line1"><span class="lang-en">B.Sc. in Mathematics</span><span class="lang-zh">数学学士</span></div>
+            <div class="cv-line2">
+              <span class="lang-en">Nanjing University, Nanjing, China</span>
+              <span class="lang-zh">南京大学，南京，中国</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 页脚 ===== -->
+    <footer class="footer-note">
+      <div class="lang-en">
+        <div>© 2026 Long Liu. All rights reserved.</div>
+        <div>Last updated: <span id="update-date-en">Loading...</span></div>
+      </div>
+      <div class="lang-zh">
+        <div>© 2026 刘龙. 保留所有权利.</div>
+        <div>最后更新: <span id="update-date-zh">加载中...</span></div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // ===== 1. 头像加载处理 =====
+    (function handleAvatarError() {
+      const img = document.getElementById('avatarImg');
+      const fallback = document.querySelector('.fallback-avatar');
+
+      function showFallback() {
+        if (img) {
+          img.style.display = 'none';
+          img.classList.add('error');
+        }
+        if (fallback) {
+          fallback.style.display = 'flex';
+        }
+      }
+
+      function hideFallback() {
+        if (img) {
+          img.style.display = 'block';
+          img.classList.remove('error');
+        }
+        if (fallback) {
+          fallback.style.display = 'none';
+        }
+      }
+
+      if (img) {
+        // 检查图片是否已加载
+        if (img.complete) {
+          if (img.naturalWidth === 0 || img.naturalHeight === 0) {
+            showFallback();
+          } else {
+            hideFallback();
+          }
+        } else {
+          img.addEventListener('load', hideFallback);
+          img.addEventListener('error', showFallback);
+        }
+
+        // 检查 src 是否有效
+        if (!img.src || img.src === '' || img.src === window.location.href) {
+          showFallback();
+        }
+      }
+    })();
+
+    // ===== 2. 汉堡菜单 =====
+    (function initHamburger() {
+      const hamburger = document.getElementById('hamburgerBtn');
+      const navLinks = document.getElementById('navLinks');
+
+      function closeMenu() {
+        navLinks.classList.remove('open');
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+      }
+
+      function toggleMenu() {
+        const isOpen = navLinks.classList.toggle('open');
+        hamburger.classList.toggle('active');
+        hamburger.setAttribute('aria-expanded', isOpen);
+        // 防止滚动
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      }
+
+      if (hamburger && navLinks) {
+        hamburger.addEventListener('click', function(e) {
+          e.stopPropagation();
+          toggleMenu();
+        });
+
+        // 点击导航链接后关闭菜单
+        navLinks.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            closeMenu();
+            document.body.style.overflow = '';
+          });
+        });
+
+        // 点击页面其他区域关闭菜单
+        document.addEventListener('click', function(e) {
+          if (navLinks.classList.contains('open')) {
+            const isClickInside = navLinks.contains(e.target) || hamburger.contains(e.target);
+            if (!isClickInside) {
+              closeMenu();
+              document.body.style.overflow = '';
             }
           }
         });
-    </script>
+
+        // 窗口大小改变时关闭菜单（响应式）
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(function() {
+            if (window.innerWidth > 768 && navLinks.classList.contains('open')) {
+              closeMenu();
+              document.body.style.overflow = '';
+            }
+          }, 250);
+        });
+
+        // ESC 键关闭菜单
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+            closeMenu();
+            document.body.style.overflow = '';
+          }
+        });
+      }
+    })();
+
+    // ===== 3. 语言切换 =====
+    function toggleLang() {
+      const isZh = document.body.classList.toggle('zh-mode');
+      const btn = document.getElementById('langBtn');
+      btn.textContent = isZh ? 'English' : '中文';
+      btn.setAttribute('aria-label', isZh ? 'Switch to English' : '切换至中文');
+      // 保存用户偏好
+      try {
+        localStorage.setItem('lang-preference', isZh ? 'zh' : 'en');
+      } catch (e) {
+        // localStorage 不可用
+      }
+    }
+
+    // ===== 4. 恢复语言偏好 =====
+    (function restoreLangPreference() {
+      try {
+        const pref = localStorage.getItem('lang-preference');
+        if (pref === 'zh') {
+          document.body.classList.add('zh-mode');
+          const btn = document.getElementById('langBtn');
+          if (btn) {
+            btn.textContent = 'English';
+            btn.setAttribute('aria-label', 'Switch to English');
+          }
+        }
+      } catch (e) {
+        // localStorage 不可用
+      }
+    })();
+
+    // ===== 5. 更新日期 =====
+    (function displayLastUpdated() {
+      const lastMod = new Date(document.lastModified);
+      const updateEn = document.getElementById('update-date-en');
+      const updateZh = document.getElementById('update-date-zh');
+
+      const date = isNaN(lastMod.getTime()) ? new Date() : lastMod;
+      const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+      if (updateEn) {
+        updateEn.textContent = `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+      }
+      if (updateZh) {
+        updateZh.textContent = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+      }
+    })();
+
+    // ===== 6. 平滑滚动增强 =====
+    (function enhanceSmoothScroll() {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            e.preventDefault();
+            const navHeight = document.querySelector('.navbar').offsetHeight;
+            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+    })();
+
+    // ===== 7. 性能优化：滚动时节流 =====
+    (function optimizeScroll() {
+      let ticking = false;
+      const navbar = document.querySelector('.navbar');
       
-    <script type="text/javascript" async
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_CHTML">
-    </script>
-</head>
-<body>
-    <!-- 页眉 -->
-    <div class="header">
-        <div>
-            <a href="/">Long Liu (刘龙)</a>
-        </div>
-        <button class="hamburger-button" onclick="hamburger()">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-        </button>
-        <div class="nav">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="publications.html">Publications / Preprints</a></li>
-                <li><a href="teaching.html">Teaching</a></li>
-                <li><a href="links.html">Links</a></li>
-            </ul>
-        </div>
-    </div>
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            const scrollY = window.pageYOffset || window.scrollY;
+            if (scrollY > 100) {
+              navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.15)';
+            } else {
+              navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+    })();
+  </script>
 
-    <!-- 标题区域 -->
-    <div class="page-title">
-        <h1>The Math Page of Long Liu</h1>
-        <h2>(刘龙的数学主页)</h2>
-        <br>
-        <a href="mailto:liulong@westlake.edu.cn" target="_top">liulong@westlake.edu.cn</a>
-    </div>
-    <br></br><br></br><br></br><br></br>
-    
-    <!-- 正文 -->
-    <h2>About Me</h2>
-    <p>
-        I am currently a postdoc at <a href="https://its.westlake.edu.cn/index.htm" target="_blank">Institute for Theoretical Sciences</a> of Westlake University. I am in the research group of <a href="https://its.westlake.edu.cn/info/1108/1995.htm" target="_blank">Huayi Chen (陈华一)</a>. 
-        <br><br>
-        Previously, I obtained my PhD degree from <a href="https://www.imj-prg.fr" target="_blank">IMJ-PRG</a> of Sorbonne Université (also known as Université Paris VI, Université Pierre-et-Marie-Curie, or even Université Jussieu).
-    </p>
-
-    <h2>Research Interests</h2>
-    <p>Number theory and arithmetic geometry. In particular, rational points, abelian varieties, zeta and <i>L</i>-functions, Brauer groups, cohomology theories.</p>
-
-    <h2>Education</h2>
-    <ul style="margin-left: 5%;">
-        <li>
-            2021.10-2024.10, PhD in mathematics, <a href="https://www.imj-prg.fr" target="_blank">IMJ-PRG, Sorbonne Université</a>, Paris, France.
-            <br>
-            Supervisor: <a href="https://webusers.imj-prg.fr/~bruno.kahn/" target="_blank">Bruno Kahn</a>
-        </li>
-        <li>
-            2020.09-2021.09, M2 Arithmétique, Analyse, Géométrie, <a href="https://www.imo.universite-paris-saclay.fr/en/" target="_blank">Université Paris-Saclay</a>, Orsay, France.
-        </li>
-        <li>
-            2017.09-2020.06, Master in mathematics, <a href="https://amss.cas.cn/" target="_blank">AMSS, Chinese Academy of Sciences</a>, Beijing, China.
-            <br>
-            Supervisor: <a href="http://www.mcm.ac.cn/people/members/202012/t20201204_1093674.html" target="_blank">Ye Tian (田野)</a>
-        </li>
-        <li>
-            2013.09-2017.06, Bachelor in mathematics, <a href="https://math.nju.edu.cn/" target="_blank">Nanjing University</a>, Nanjing, China.
-        </li>
-    </ul>
 </body>
 </html>
